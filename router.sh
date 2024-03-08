@@ -17,9 +17,10 @@ echo "Set sysctl variables for routing ..."
 sysctl -w net.ipv4.conf.all.proxy_arp=1
 sysctl -w net.ipv4.ip_forward=1
 
-echo "Reseting network service ..."
+echo "Resetting network service ..."
 rc-update add networking boot
 rc-service networking restart
+hostname "router"
 
 echo "Setting up static IP table ..."
 ip route add 10.0.0.1/32 dev eth1

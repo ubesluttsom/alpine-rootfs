@@ -9,6 +9,7 @@ iface eth1 inet static
       netmask 255.255.255.0
       gateway 10.0.0.10' > /etc/network/interfaces
 
-echo "Reseting network service ..."
+echo "Resetting network service ..."
 rc-update add networking boot
 rc-service networking restart
+hostname "vm1"
