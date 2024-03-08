@@ -1,7 +1,13 @@
-# Alpine VM configuration scripts
+# Minimal Alpine Linux rootfs
 
-These are used inside Alpine VMs to properly configure them for the test setup used for my thesis.
+Make a *minimal* Alpine Linux system image. Do `./docker.sh` to build. Dependant on `../linux/modules/lib/modules/` existing. Note the relative path.
 
-* [`init.sh`](init.sh) chooses the right script to execute based on a custom kernel parameter, `vm=...`.
-* [`vm1.sh`](vm1.sh), [`vm2.sh`](router.sh), and [`router.sh`](router.sh) configures the VM as the respective nodes in the network.
-* [`reset-network.sh`](reset-network.sh) opens interface `eth0`, to enable general access to the internet.
+The Docker-container script executes, in order:
+
+* [`./get-alpine-rootfs.sh`](./get-alpine-rootfs.sh)
+* [`./patch-alpine-rootfs.sh`](./patch-alpine-rootfs.sh)
+* [`./create-alpine-rootfs.sh`](./create-alpine-rootfs.sh)
+
+and spits out a `rootfs.img`.
+
+The [`alpine-scripts/`](alpine-scripts/) directory contains scripts to be put inside the file system image.
