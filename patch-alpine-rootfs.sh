@@ -3,9 +3,11 @@
 set -e
 
 LATEST_MINI_ROOTFS=$(find . -name 'alpine-minirootfs-[0-9.]*-aarch64.tar.gz')
-ROOTFS_DIR="rootfs/"
-KERNEL_MODULES="kernel-modules/"
-ALPINE_SCRIPTS="alpine-scripts/"
+ROOTFS_DIR="rootfs"
+KERNEL_MODULES="kernel-modules"
+KERNEL_HEADERS="kernel-headers"
+KERNEL_VERSION="6.7.0"
+ALPINE_SCRIPTS="alpine-scripts"
 
 if [ -d "$ROOTFS_DIR" ]; then
     echo "Directory '$ROOTFS_DIR' exists. Refusing to overwrite."
@@ -17,13 +19,21 @@ mkdir $ROOTFS_DIR
 tar -xf $LATEST_MINI_ROOTFS --directory rootfs
 
 echo "Patching with kernel modules ... "
-cp -R $KERNEL_MODULES $ROOTFS_DIR/lib/modules/
-cp -R $ALPINE_SCRIPTS/* $ROOTFS_DIR/root/
+mkdir -p $ROOTFS_DIR/lib/modules/
+mv -v $KERNEL_MODULES/* $ROOTFS_DIR/lib/modules/
+
+echo "Adding kernel headers ... "
+mkdir -p $ROOTFS_DIR/usr/src/linux-$KERNEL_VERSION/
+mv -v $KERNEL_HEADERS/* $ROOTFS_DIR/usr/src/linux-$KERNEL_VERSION/
+chroot $ROOTFS_DIR ln -sfn /usr/src/linux-$KERNEL_VERSION /lib/modules/$KERNEL_VERSION/build
+
+echo "Adding Alpine configuration scripts ... "
+mv -v $ALPINE_SCRIPTS/* $ROOTFS_DIR/root/
 
 echo "Adding neccessary packages ... "
 cp /etc/resolv.conf $ROOTFS_DIR/etc/resolv.conf
 chroot $ROOTFS_DIR apk add --no-cache \
-        openrc busybox-mdev-openrc agetty iperf3
+        openrc busybox-mdev-openrc iptables agetty iperf3
 
 echo "Enable drivers and mounting of filesystem ... "
 chroot $ROOTFS_DIR rc-update add mdev sysinit
@@ -32,7 +42,8 @@ chroot $ROOTFS_DIR rc-update add localmount boot
 
 echo "Setting up serial TTY ... "
 chroot $ROOTFS_DIR ln -s /etc/init.d/agetty /etc/init.d/agetty.ttyAMA0
-chroot $ROOTFS_DIR sed -i -E 's/#(agetty_options=).*/\1"--autologin root --noclear"/' /etc/conf.d/agetty
+sed -i -E 's/#(agetty_options=).*/\1"--autologin root --noclear"/' \
+        $ROOTFS_DIR/etc/conf.d/agetty
 chroot $ROOTFS_DIR rc-update add agetty.ttyAMA0 default
 chroot $ROOTFS_DIR rm /etc/motd
 

@@ -25,3 +25,4 @@ modprobe pepdna port=9999 mode=0
 
 echo "Reseting network service ..."
 rc-service networking restart
+hostname pep-dna-router
