@@ -13,3 +13,13 @@ echo "Resetting network service ..."
 rc-update add networking boot
 rc-service networking restart
 hostname "vm1"
+
+# Ping loop
+timeout=10
+target_ip="10.0.0.2"
+echo "Pinging $target_ip until it responds..."
+while ! ping -c1 -W $timeout $target_ip &>/dev/null; do
+    echo "Waiting for $target_ip to respond..."
+    sleep 1
+done
+echo "$target_ip is up!"
