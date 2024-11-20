@@ -8,16 +8,16 @@ iface eth0 inet dhcp
 
 auto eth1
 iface eth1 inet static
-      address 10.1.1.1
+      address 10.2.3.3
       netmask 255.255.255.0
-      gateway 10.1.1.0' > /etc/network/interfaces
+      gateway 10.2.3.0' > /etc/network/interfaces
 
 echo "Resetting network service ..."
 rc-update add networking boot
 rc-service networking restart
 rc-update add dropbear
 rc-service dropbear restart
-hostname "vm1"
+hostname "vm3"
 
 # Ping loop
 ping_loop () {
@@ -30,6 +30,7 @@ ping_loop () {
     done
     echo "$target_ip is up!"
 }
+ping_loop "10" "10.1.1.1"
 ping_loop "10" "10.2.2.2"
 
 /root/cong.sh lgc 10

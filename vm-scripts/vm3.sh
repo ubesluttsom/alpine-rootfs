@@ -1,0 +1,2 @@
+#!/bin/sh
+qemu-system-aarch64 -m 1024 -cpu cortex-a72 -M virt -nographic --no-reboot -kernel ../linux/arch/arm64/boot/Image -append "console=ttyAMA0 root=/dev/vda vm=vm3" -drive file=../alpine-rootfs/rootfs.img,format=raw,snapshot=on -netdev user,id=netuser,net=192.168.100.0/24,hostfwd=tcp::2203-:22 -device e1000,netdev=netuser -netdev socket,id=netrouter2,connect=:44585 -device e1000,netdev=netrouter2 -object filter-dump,id=filterrouter2,netdev=netrouter2,file=/tmp/vm3-router2.pcap

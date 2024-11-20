@@ -2,15 +2,26 @@
 FROM alpine:latest
 
 # Install the required packages
-RUN apk add --no-cache e2fsprogs curl tar
+RUN apk add --no-cache \
+    e2fsprogs \
+    curl \
+    tar \
+    make
 
 # Set the working directory
 WORKDIR /build
 
 # Copy the scripts and necessary files into the image
-COPY get-alpine-rootfs.sh patch-alpine-rootfs.sh create-alpine-rootfs.sh ./
+COPY get-alpine-rootfs.sh \
+     patch-alpine-rootfs.sh \
+     create-alpine-rootfs.sh \
+     vm_key.pub \
+     vm.py \
+     vms.json \
+     ./
 COPY kernel-modules ./kernel-modules
 COPY kernel-headers ./kernel-headers
+COPY custom-iproute2 ./custom-iproute2
 COPY alpine-scripts ./alpine-scripts
 
 # Execute the scripts to set up the environment

@@ -1,0 +1,9 @@
+auto eth0
+iface eth0 inet dhcp
+    post-up ip route add 10.0.0.0/8 via 10.160.0.1
+
+auto eth1
+iface eth1 inet static
+    address 10.160.0.1
+    netmask 255.224.0.0
+    post-up ip route add 10.160.0.0/11 via 10.160.0.1

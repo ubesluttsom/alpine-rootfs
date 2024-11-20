@@ -1,0 +1,22 @@
+{
+    "vm1": {
+        "ssh_port": 2201,
+        "links": ["router1"]
+    },
+    "vm2": {
+        "ssh_port": 2202,
+        "links": ["router2"]
+    },
+    "router1": {
+        "ssh_port": 2210,
+        "links": ["vm1", "router2"]
+    },
+    "router2": {
+        "ssh_port": 2220,
+        "links": ["router1", "vm2", "vm3"]
+    },
+    "vm3": {
+        "ssh_port": 2203,
+        "links": ["router2"]
+    }
+}
