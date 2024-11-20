@@ -1,1 +1,0 @@
-{"directed": true, "multigraph": false, "graph": {}, "nodes": [{"id": "router1"}, {"id": "vm1"}, {"id": "router2"}, {"id": "vm2"}, {"id": "vm3"}], "links": [{"port": 53481, "source": "router1", "target": "vm1"}, {"port": 38187, "source": "router1", "target": "router2"}, {"port": 57985, "source": "router2", "target": "vm2"}, {"port": 44585, "source": "router2", "target": "vm3"}]}

@@ -72,28 +72,15 @@ configure_vm () {
 
 # Use $config to decide what to do
 case "$config" in
-    none)
-        hostname "none"
-        ./root/reset-network.sh
-        ;;
     [0-9])
         hostname "vm$config"
-        ./root/reset-network.sh
         ;;
-    # router1|router2)
-    #     configure_vm --router $config
-    #     ;;
-    # vm1|vm2|vm3)
-    #     configure_vm $config
-    #     ;;
-    # *)
-    #     echo -e " ${YELLOW}Unknown configuration. (\`vm=\` kernel parameter not {router1, router2, vm1, vm2, vm3, [0-1]}.)${NC}"
-    #     exit 0
     *)
         hostname "$config"
-        ./root/reset-network.sh
         ;;
 esac
+
+/root/reset-network.sh
 
 echo -e "${GREEN}VM init done!${NC}"
 exit 0

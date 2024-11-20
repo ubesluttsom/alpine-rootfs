@@ -11,7 +11,3 @@ The Docker-container script executes, in order:
 and spits out a `rootfs.img`.
 
 The [`alpine-scripts/`](alpine-scripts/) directory contains scripts to be put inside the file system image.
-
-## `vm.py` script
-
-There is a `vm.py` script that should automatically create the right configuration files for the different VMs in addition to the correct QEMU invocations. It tries to create IP and port assignments. Do a `./vm.py` to see how to use it. It is dependent on a `vms.json` configuration file, which describes the network topology.

@@ -9,7 +9,6 @@ KERNEL_HEADERS="kernel-headers"
 KERNEL_VERSION="6.7.0"
 # CUSTOM_IPROUTE2="custom-iproute2"
 ALPINE_SCRIPTS="alpine-scripts"
-VM_INTERFACES="vm-interfaces"
 
 if [ -d "$ROOTFS_DIR" ]; then
     echo "Directory '$ROOTFS_DIR' exists. Refusing to overwrite."
@@ -61,11 +60,6 @@ mkdir -p $ROOTFS_DIR/root/.ssh
 mv vm_key.pub $ROOTFS_DIR/root/.ssh/authorized_keys
 chmod 700 $ROOTFS_DIR/root/.ssh
 chmod 600 $ROOTFS_DIR/root/.ssh/authorized_keys
-
-# echo "Generate interfaces VMs ... "
-# ./vm.py --generate
-# ./vm.py --interfaces
-# mv -v $VM_INTERFACES $ROOTFS_DIR/root/$VM_INTERFACES
 
 echo "Adding VM configuration service ... "
 echo '#!/sbin/openrc-run

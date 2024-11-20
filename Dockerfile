@@ -16,8 +16,6 @@ COPY get-alpine-rootfs.sh \
      patch-alpine-rootfs.sh \
      create-alpine-rootfs.sh \
      vm_key.pub \
-     vm.py \
-     vms.json \
      ./
 COPY kernel-modules ./kernel-modules
 COPY kernel-headers ./kernel-headers
