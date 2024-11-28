@@ -5,7 +5,7 @@ set -e
 ROOTFS_IMG="rootfs.img"
 KERNEL_MODULES="../linux/modules/lib/modules"
 KERNEL_HEADERS="../linux/headers"
-CUSTOM_IPROUTE2="../iproute2"
+# CUSTOM_IPROUTE2="../iproute2"
 VM_KEY="vm_key"
 VM_KEY_PUB="vm_key_pub"
 
@@ -24,16 +24,16 @@ if [ ! -d "$KERNEL_HEADERS" ]; then
     exit 1
 fi
 
-if [ ! -d "$CUSTOM_IPROUTE2" ]; then
-    echo "Directory '$CUSTOM_IPROUTE2' does not exist."
-    exit 1
-fi
+# if [ ! -d "$CUSTOM_IPROUTE2" ]; then
+#     echo "Directory '$CUSTOM_IPROUTE2' does not exist."
+#     exit 1
+# fi
 
 mkdir -p kernel-modules
 mkdir -p kernel-headers
 cp -R $KERNEL_MODULES/ ./kernel-modules
 cp -R $KERNEL_HEADERS/ ./kernel-headers
-rsync -a --exclude='.git' $CUSTOM_IPROUTE2/ ./custom-iproute2
+# rsync -a --exclude='.git' $CUSTOM_IPROUTE2/ ./custom-iproute2
 
 if [ ! -f "$VM_KEY" ]; then
     echo "Generating VM key pair."

@@ -19,7 +19,7 @@ COPY get-alpine-rootfs.sh \
      ./
 COPY kernel-modules ./kernel-modules
 COPY kernel-headers ./kernel-headers
-COPY custom-iproute2 ./custom-iproute2
+# COPY custom-iproute2 ./custom-iproute2
 COPY alpine-scripts ./alpine-scripts
 
 # Execute the scripts to set up the environment
